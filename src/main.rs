@@ -2,26 +2,16 @@ mod util;
 mod commands;
 
 use std::env;
-use std::fmt::Display;
 
-use rand::Rng;
 use serenity::model::prelude::*;
 use serenity::prelude::*;
 use serenity::{
     framework::{
         StandardFramework,
-        standard::{
-            macros::{
-                command,
-                group,
-            },
-            CommandResult,
-            Args,
-        },
     },
     model::{
-        channel::Message,
         gateway::Ready,
+        application::interaction::Interaction,
     },
     Client,
     async_trait,
@@ -37,15 +27,13 @@ struct Handler;
 impl EventHandler for Handler {
     
     /**
-     * ------------------------------------
-     * Ready
-     * ------------------------------------
+     * # Ready
     */
     async fn ready(&self, ctx: Context, _ready: Ready) {
         println!("Bot logged in");
 
         // Register slash commands with discord
-        match serenity::model::application::command::Command::set_global_application_commands(&ctx.http, |commands| {
+        match command::Command::set_global_application_commands(&ctx.http, |commands| {
             commands
                 .create_application_command(|c| commands::ping::register(c))
                 .create_application_command(|c| commands::rps::register(c))
@@ -56,9 +44,7 @@ impl EventHandler for Handler {
     }
 
     /**
-     * ------------------------------------
-     * Interaction create
-     * ------------------------------------
+     * # Interaction create
      */
     async fn interaction_create(&self, ctx: Context, interaction: Interaction) {
         if let Interaction::ApplicationCommand(command) = interaction {
