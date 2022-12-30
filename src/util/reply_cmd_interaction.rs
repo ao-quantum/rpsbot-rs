@@ -1,7 +1,7 @@
 use serenity::builder::{CreateEmbed};
 use serenity::client::Context;
-use serenity::model::interactions::InteractionResponseType;
-use serenity::model::prelude::application_command::ApplicationCommandInteraction;
+use serenity::model::application::interaction::application_command::ApplicationCommandInteraction;
+use serenity::model::application::interaction::InteractionResponseType;
 
 pub async fn reply_cmd_interaction(
     ctx: Context,
@@ -10,7 +10,7 @@ pub async fn reply_cmd_interaction(
     embeds: Vec<CreateEmbed>,
     content: Option<&str>
 ) -> serenity::Result<()> {
-    return interaction.create_interaction_response(ctx, |r|
+    interaction.create_interaction_response(ctx, |r|
         r
             .kind(InteractionResponseType::ChannelMessageWithSource)
             .interaction_response_data(|d| {
@@ -24,5 +24,5 @@ pub async fn reply_cmd_interaction(
 
                 return d;
             })
-    ).await;
+    ).await
 }

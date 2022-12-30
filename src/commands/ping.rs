@@ -1,7 +1,7 @@
 use serenity::prelude::Context;
 use serenity::builder::CreateApplicationCommand;
-use serenity::model::interactions::InteractionResponseType;
-use serenity::model::prelude::application_command::ApplicationCommandInteraction;
+use serenity::model::application::interaction::InteractionResponseType;
+use serenity::model::prelude::interaction::application_command::ApplicationCommandInteraction;
 
 pub async fn run(ctx: Context, interaction: ApplicationCommandInteraction) {
     match interaction.create_interaction_response(ctx,|r|
